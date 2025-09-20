@@ -18,5 +18,6 @@ cicd() {
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
+  pkill -f \"python3 main.py\" && \
   (nohup uv run main.py > run.log 2>&1 & disown)'"
 }
