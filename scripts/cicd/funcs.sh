@@ -14,7 +14,7 @@ END
 }
 
 stop_service() {
-  pkill -f "python3 main.py" 2>/dev/null || true
+  pkill -f "python3 main.py"
 }
 
 cicd() {
