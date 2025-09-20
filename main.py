@@ -4,7 +4,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def job():
-    logger.info("定时任务执行一次！")
+    logger.info("定时任务执行一次1！")
 
 
 if __name__ == "__main__":
