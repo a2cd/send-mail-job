@@ -14,10 +14,10 @@ END
 }
 
 cicd() {
-  ssh remote-server "\
+  ssh remote-server "bash -c 'set -x; \
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
-  uv run main.py
+  uv run main.py &'
   "
 }
