@@ -13,11 +13,14 @@ Host remote-server
 END
 }
 
+stop_service() {
+  pkill -f "python3 main.py" 2>/dev/null || true
+}
+
 cicd() {
   ssh remote-server "bash -c 'set -x; \
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
-  (pgrep -f \"python3 main.py\" | xargs -r kill || true) && \
-  (nohup uv run main.py > run.log 2>&1 & disown)'"
+  (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'"
 }
