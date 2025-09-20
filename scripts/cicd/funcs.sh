@@ -13,10 +13,21 @@ Host remote-server
 END
 }
 
+
+stop_service() {
+  pid=$(pgrep -f "python3 main.py")
+  if [ -n "$pid" ]; then
+      kill "$pid"
+  else
+      echo "No matching process found."
+  fi
+}
+
 cicd() {
   ssh remote-server "bash -c 'set -x; \
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
+  kill $(pgrep -f \"python3 main.py\") && \
   (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'"
 }
