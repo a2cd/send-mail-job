@@ -24,7 +24,5 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: . scripts/cicd/funcs.sh && setup_ssh
-      - name: stop service
-        run: . scripts/cicd/funcs.sh && stop_service
       - name: run CI/CD
         run: . scripts/cicd/funcs.sh && cicd

@@ -13,14 +13,11 @@ Host remote-server
 END
 }
 
-stop_service() {
-  pkill -f "python3 main.py"
-}
-
 cicd() {
   ssh remote-server "bash -c 'set -x; \
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
+  (pkill -f \"python3 main.py\") && \
   (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'"
 }
