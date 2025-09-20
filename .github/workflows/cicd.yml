@@ -1,0 +1,30 @@
+name: Send Mail Job CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  TZ: Asia/Shanghai
+  BUILD_GREETING: hello
+  SEGMENT_DOWNLOAD_TIMEOUT_MINS: '5'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # pull代码
+      - name: print-timezone-info
+        run: date && timedatectl
+      - name: package
+        run: . scripts/cicd/funcs.sh && package
+      - name: setup-ssh
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: . scripts/cicd/funcs.sh && setup_ssh
+      - name: deploy
+        run: . scripts/cicd/funcs.sh && sync_files && reload_nginx
