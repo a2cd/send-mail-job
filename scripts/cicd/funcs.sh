@@ -24,10 +24,12 @@ stop_service() {
 }
 
 cicd() {
-  ssh remote-server "bash -c 'set -x; \
-  cd /usr/local/repo/send-mail-job/ && \
-  git pull origin main && \
-  uv sync && \
-  kill $(pgrep -f \"python3 main.py\") && \
-  (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'"
+  ssh remote-server <<'EOF'
+    bash -c 'set -x; \
+    cd /usr/local/repo/send-mail-job/ && \
+    git pull origin main && \
+    uv sync && \
+    pkill -f "python3 main.py" && \
+    (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'
+  EOF
 }
