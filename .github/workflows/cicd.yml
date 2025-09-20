@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+permissions:
+  contents: write
+
 env:
   TZ: Asia/Shanghai
   BUILD_GREETING: hello
