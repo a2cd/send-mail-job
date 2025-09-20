@@ -1,12 +1,5 @@
 #!/bin/sh
 
-package() {
-  mkdir dist/
-  # 简单打包dist
-  cp -r index.html style.css player.js favicon.ico img/ dist/
-}
-
-
 setup_ssh() {
   mkdir -p ~/.ssh/
   echo "$SSH_PRIVATE_KEY" > ~/.ssh/github_actions.pri.key
@@ -20,10 +13,11 @@ Host remote-server
 END
 }
 
-sync_files() {
-  rsync -avz --progress ./dist/ remote-server:/usr/local/nginx/html/musics/dist/
-}
-
-reload_nginx() {
-  ssh remote-server "docker exec nginx nginx -s reload"
+cicd() {
+  ssh remote-server "\
+  cd /usr/local/repo/send-mail-job/ && \
+  git pull origin main && \
+  uv sync && \
+  uv run main.py
+  "
 }

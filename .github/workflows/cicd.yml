@@ -18,13 +18,11 @@ jobs:
       - uses: actions/checkout@v4 # pull代码
       - name: print-timezone-info
         run: date && timedatectl
-      - name: package
-        run: . scripts/cicd/funcs.sh && package
       - name: setup-ssh
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: . scripts/cicd/funcs.sh && setup_ssh
-      - name: deploy
-        run: . scripts/cicd/funcs.sh && sync_files && reload_nginx
+      - name: run CI/CD
+        run: . scripts/cicd/funcs.sh && cicd
