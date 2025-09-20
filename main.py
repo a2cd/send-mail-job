@@ -25,5 +25,5 @@ if __name__ == "__main__":
 
     # 启动定时任务
     scheduler = BlockingScheduler()
-    scheduler.add_job(job, "interval", seconds=60)  # 每60秒执行一次
+    scheduler.add_job(job, "interval", seconds=5)  # 每60秒执行一次
     scheduler.start()
