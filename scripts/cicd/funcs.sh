@@ -18,5 +18,5 @@ cicd() {
   cd /usr/local/repo/send-mail-job/ && \
   git pull origin main && \
   uv sync && \
-  nohup uv run main.py > /dev/null 2>&1 &'"
+  nohup uv run main.py > /dev/null 2>&1 & disown'"
 }
