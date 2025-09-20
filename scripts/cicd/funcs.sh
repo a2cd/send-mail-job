@@ -19,7 +19,7 @@ bash -c 'set -x; \
 cd /usr/local/repo/send-mail-job/ && \
 git pull origin main && \
 uv sync && \
-(pids=$(pgrep -f "python3 main.py"); if [ -n "$pids" ]; then kill $pids; fi) || true && \
+(pkill -f "python3 main.py") || true && \
 (nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'
 EOF
 }
