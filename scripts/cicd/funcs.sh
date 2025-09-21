@@ -15,11 +15,10 @@ END
 
 cicd() {
   ssh remote-server <<EOF
-bash -c 'set -x; \
 cd /usr/local/repo/send-mail-job/ && \
 git pull origin main && \
 uv sync && \
-pgrep -f "kill" | xargs kill -9 && \
-(nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)'
+pkill -f "python3 main.py" && \
+(nohup uv run main.py > /dev/null 2>&1 < /dev/null & disown)
 EOF
 }
