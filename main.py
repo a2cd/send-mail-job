@@ -4,7 +4,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def job():
-    logger.info("定时任务执行一次！")
+    logger.info("定时任务执行一次1！")
 
 
 if __name__ == "__main__":
@@ -25,5 +25,5 @@ if __name__ == "__main__":
 
     # 启动定时任务
     scheduler = BlockingScheduler()
-    scheduler.add_job(job, "interval", seconds=3600)  # 每3600秒执行一次
+    scheduler.add_job(job, "interval", seconds=5)  # 每3600秒执行一次
     scheduler.start()
